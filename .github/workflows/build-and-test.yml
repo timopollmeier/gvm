@@ -101,7 +101,7 @@ jobs:
       - name: Configure and Scan Build (Debug, PostgreSQL)
         run: mkdir build && cd build/ && scan-build cmake -DCMAKE_BUILD_TYPE=Debug .. && scan-build -o ~/scan-build-report make && [ -z "$(ls -A ~/scan-build-report/)" ]
       - name: Upload scan-build report
-        if: ${{ ! env.ACT }}
+        if: failure() && !(env.ACT)
         uses: actions/upload-artifact@v2
         with:
           name: scan-build-report
